@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Monetization Eligibility Checker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #1a2a6c, #b21f1f, #fdbb2d, #1a2a6c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: #f8f8f8;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .platform-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .platform-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .platform-option i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .platform-option.active {
+            border-color: #3498db;
+            background-color: #e8f4fc;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+        }
+
+        .platform-option:hover {
+            transform: scale(1.05);
+        }
+
+        .platform-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .input-with-icon input {
+            padding-left: 45px;
+        }
+
+        .watch-time-section {
+            display: none;
+        }
+
+        .watch-time-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .button {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .button:hover {
+            background: linear-gradient(to right, #2980b9, #1a252f);
+            box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+        }
+
+        .button:active {
+            transform: translateY(2px);
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #f8f9fa;
+        }
+
+        .status-icon {
+            font-size: 3.5rem;
+            margin-right: 20px;
+        }
+
+        .status-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .eligible {
+            color: #27ae60;
+        }
+
+        .not-eligible {
+            color: #e74c3c;
+        }
+
+        .requirements-list {
+            margin: 25px 0;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+
+        .requirement i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .requirement.met i {
+            color: #27ae60;
+        }
+
+        .requirement.not-met i {
+            color: #e74c3c;
+        }
+
+        .requirement-text {
+            flex: 1;
+        }
+
+        .requirement-value {
+            font-weight: 600;
+        }
+
+        .improvement-tips {
+            background-color: #fff8e1;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 25px;
+            border-left: 5px solid #ffc107;
+        }
+
+        .tips-title {
+            font-size: 1.2rem;
+            color: #d35400;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tips-title i {
+            margin-right: 10px;
+        }
+
+        .tip {
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 2px solid #ffc107;
+            padding-bottom: 10px;
+        }
+
+        .tip:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .note {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 20px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .platform-selector {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .status-indicator {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .status-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .platform-selector {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .platform-logo {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .platform-logo img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Monetization Eligibility Checker Tool</h1>
+            <p class="subtitle">Check if you meet the requirements for monetization on major social platforms</p>
+        </header>
+
+        <div class="card input-section">
+            <h2 class="section-title">Platform & Metrics</h2>
+            
+            <div class="platform-selector">
+                <div class="platform-option active" data-platform="youtube">
+                    <i class="fab fa-youtube" style="color: #FF0000;"></i>
+                    <span class="platform-name">YouTube</span>
+                </div>
+                <div class="platform-option" data-platform="instagram">
+                    <i class="fab fa-instagram" style="color: #E4405F;"></i>
+                    <span class="platform-name">Instagram</span>
+                </div>
+                <div class="platform-option" data-platform="tiktok">
+                    <i class="fab fa-tiktok" style="color: #000000;"></i>
+                    <span class="platform-name">TikTok</span>
+                </div>
+                <div class="platform-option" data-platform="facebook">
+                    <i class="fab fa-facebook" style="color: #1877F2;"></i>
+                    <span class="platform-name">Facebook</span>
+                </div>
+                <div class="platform-option" data-platform="twitch">
+                    <i class="fab fa-twitch" style="color: #9146FF;"></i>
+                    <span class="platform-name">Twitch</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="followers">Followers / Subscribers</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-users"></i>
+                    <input type="number" id="followers" placeholder="Enter your follower count" min="0" value="1000">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="views">Monthly Views</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-eye"></i>
+                    <input type="number" id="views" placeholder="Enter your average monthly views" min="0" value="50000">
+                </div>
+            </div>
+
+            <div class="input-group watch-time-section" id="watchTimeSection">
+                <label for="watchTime">Watch Time (hours)</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-clock"></i>
+                    <input type="number" id="watchTime" placeholder="Enter your total watch time in hours" min="0" value="4000">
+                </div>
+            </div>
+
+            <button id="checkButton" class="button">
+                <i class="fas fa-chart-line"></i> Check Eligibility
+            </button>
+        </div>
+
+        <div class="card results-section" id="resultsSection">
+            <h2 class="section-title">Eligibility Results</h2>
+            
+            <div class="status-indicator">
+                <div class="status-icon">
+                    <i class="fas fa-question-circle" id="statusIcon"></i>
+                </div>
+                <div class="status-text" id="statusText">Check your eligibility</div>
+            </div>
+
+            <div class="requirements-list" id="requirementsList">
+                <!-- Requirements will be populated here -->
+            </div>
+
+            <div class="improvement-tips" id="improvementTips">
+                <!-- Tips will be populated here -->
+            </div>
+
+            <p class="note">Note: This tool provides estimates based on publicly available platform requirements. Always check the official platform guidelines for the most current information.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Platform selection
+            const platformOptions = document.querySelectorAll('.platform-option');
+            const watchTimeSection = document.getElementById('watchTimeSection');
+            
+            // Platform-specific requirements (realistic data based on platform policies)
+            const platformRequirements = {
+                youtube: {
+                    name: "YouTube",
+                    requirements: [
+                        { name: "Subscribers", required: 1000, met: false },
+                        { name: "Watch hours (past 12 months)", required: 4000, met: false },
+                        { name: "Active channel", required: true, met: true }
+                    ],
+                    watchTimeRequired: true
+                },
+                instagram: {
+                    name: "Instagram",
+                    requirements: [
+                        { name: "Followers", required: 10000, met: false },
+                        { name: "Consistent content", required: true, met: true },
+                        { name: "Adherence to guidelines", required: true, met: true }
+                    ],
+                    watchTimeRequired: false
+                },
+                tiktok: {
+                    name: "TikTok",
+                    requirements: [
+                        { name: "Followers", required: 10000, met: false },
+                        { name: "Video views (past 30 days)", required: 100000, met: false },
+                        { name: "Original content", required: true, met: true }
+                    ],
+                    watchTimeRequired: false
+                },
+                facebook: {
+                    name: "Facebook",
+                    requirements: [
+                        { name: "Page followers", required: 10000, met: false },
+                        { name: "Video views (60 days)", required: 60000, met: false },
+                        { name: "Content compliance", required: true, met: true }
+                    ],
+                    watchTimeRequired: false
+                },
+                twitch: {
+                    name: "Twitch",
+                    requirements: [
+                        { name: "Followers", required: 50, met: false },
+                        { name: "Stream hours (30 days)", required: 8, met: false },
+                        { name: "Average viewers (30 days)", required: 3, met: false }
+                    ],
+                    watchTimeRequired: false
+                }
+            };
+            
+            // Current selected platform
+            let selectedPlatform = 'youtube';
+            
+            // Platform selection handler
+            platformOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    platformOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedPlatform = this.getAttribute('data-platform');
+                    
+                    // Show/hide watch time section based on platform
+                    if (platformRequirements[selectedPlatform].watchTimeRequired) {
+                        watchTimeSection.classList.add('show');
+                    } else {
+                        watchTimeSection.classList.remove('show');
+                    }
+                    
+                    // Update placeholder text based on platform
+                    const followersInput = document.getElementById('followers');
+                    if (selectedPlatform === 'youtube') {
+                        followersInput.placeholder = "Enter your subscriber count";
+                    } else if (selectedPlatform === 'twitch') {
+                        followersInput.placeholder = "Enter your follower count";
+                    } else {
+                        followersInput.placeholder = "Enter your follower count";
+                    }
+                });
+            });
+            
+            // Check eligibility button handler
+            document.getElementById('checkButton').addEventListener('click', checkEligibility);
+            
+            // Function to check eligibility
+            function checkEligibility() {
+                const followers = parseInt(document.getElementById('followers').value) || 0;
+                const views = parseInt(document.getElementById('views').value) || 0;
+                const watchTime = parseInt(document.getElementById('watchTime').value) || 0;
+                
+                // Get requirements for selected platform
+                const platformReq = platformRequirements[selectedPlatform];
+                
+                // Check which requirements are met
+                let allRequirementsMet = true;
+                let metRequirements = 0;
+                let totalRequirements = platformReq.requirements.length;
+                
+                // Update requirement status based on inputs
+                platformReq.requirements.forEach(req => {
+                    if (typeof req.required === 'number') {
+                        // For numeric requirements
+                        if (req.name.includes("Subscribers") || req.name.includes("Followers")) {
+                            req.met = followers >= req.required;
+                        } else if (req.name.includes("views") || req.name.includes("Video views")) {
+                            req.met = views >= req.required;
+                        } else if (req.name.includes("Watch hours")) {
+                            req.met = watchTime >= req.required;
+                        } else if (req.name.includes("Stream hours")) {
+                            // Twitch specific - using watchTime as stream hours
+                            req.met = watchTime >= req.required;
+                        } else if (req.name.includes("Average viewers")) {
+                            // Twitch specific - using views as average viewers
+                            req.met = views >= req.required;
+                        }
+                    } else {
+                        // For boolean requirements (always considered met for this demo)
+                        req.met = true;
+                    }
+                    
+                    if (!req.met) {
+                        allRequirementsMet = false;
+                    } else {
+                        metRequirements++;
+                    }
+                });
+                
+                // Update UI with results
+                updateResultsUI(allRequirementsMet, metRequirements, totalRequirements, platformReq, followers, views, watchTime);
+            }
+            
+            // Function to update the results UI
+            function updateResultsUI(allMet, metCount, totalCount, platformReq, followers, views, watchTime) {
+                const resultsSection = document.getElementById('resultsSection');
+                const statusIcon = document.getElementById('statusIcon');
+                const statusText = document.getElementById('statusText');
+                const requirementsList = document.getElementById('requirementsList');
+                const improvementTips = document.getElementById('improvementTips');
+                
+                // Show results section
+                resultsSection.classList.add('show');
+                
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Update status indicator
+                if (allMet) {
+                    statusIcon.className = "fas fa-check-circle eligible";
+                    statusText.innerHTML = `Eligible for ${platformReq.name} Monetization`;
+                    statusText.className = "status-text eligible";
+                } else {
+                    statusIcon.className = "fas fa-times-circle not-eligible";
+                    statusText.innerHTML = `Not Yet Eligible for ${platformReq.name} Monetization`;
+                    statusText.className = "status-text not-eligible";
+                }
+                
+                // Update requirements list
+                requirementsList.innerHTML = "";
+                
+                platformReq.requirements.forEach(req => {
+                    const requirementElement = document.createElement('div');
+                    requirementElement.className = `requirement ${req.met ? 'met' : 'not-met'}`;
+                    
+                    const icon = req.met ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>';
+                    
+                    let requirementText = req.name;
+                    let userValue = "";
+                    
+                    // Determine which user value to display
+                    if (req.name.includes("Subscribers") || req.name.includes("Followers")) {
+                        userValue = followers.toLocaleString();
+                    } else if (req.name.includes("Watch hours")) {
+                        userValue = watchTime.toLocaleString() + " hours";
+                    } else if (req.name.includes("views") || req.name.includes("Video views")) {
+                        userValue = views.toLocaleString();
+                    } else if (req.name.includes("Stream hours")) {
+                        userValue = watchTime + " hours";
+                    } else if (req.name.includes("Average viewers")) {
+                        userValue = views + " viewers";
+                    }
+                    
+                    requirementElement.innerHTML = `
+                        ${icon}
+                        <div class="requirement-text">${requirementText}</div>
+                        <div class="requirement-value">${typeof req.required === 'number' ? `${userValue} / ${req.required.toLocaleString()}` : (req.met ? 'Met' : 'Required')}</div>
+                    `;
+                    
+                    requirementsList.appendChild(requirementElement);
+                });
+                
+                // Generate improvement tips
+                improvementTips.innerHTML = "";
+                
+                const tipsTitle = document.createElement('div');
+                tipsTitle.className = "tips-title";
+                tipsTitle.innerHTML = '<i class="fas fa-lightbulb"></i> Tips to Improve Your Eligibility';
+                improvementTips.appendChild(tipsTitle);
+                
+                const tipsList = document.createElement('div');
+                tipsList.id = "tipsList";
+                
+                // Platform-specific tips
+                const tips = [];
+                
+                if (selectedPlatform === 'youtube') {
+                    if (followers < 1000) {
+                        tips.push("Create consistent, high-quality content to attract more subscribers.");
+                        tips.push("Use relevant keywords in your video titles and descriptions to improve discoverability.");
+                        tips.push("Engage with your audience through comments and community posts.");
+                    }
+                    if (watchTime < 4000) {
+                        tips.push("Create longer, engaging content to increase watch time.");
+                        tips.push("Use storytelling techniques to keep viewers watching until the end.");
+                        tips.push("Create playlists to encourage binge-watching of your content.");
+                    }
+                } else if (selectedPlatform === 'instagram') {
+                    if (followers < 10000) {
+                        tips.push("Use relevant hashtags to reach a wider audience.");
+                        tips.push("Post consistently, ideally at least once per day.");
+                        tips.push("Engage with other creators in your niche to build community.");
+                    }
+                } else if (selectedPlatform === 'tiktok') {
+                    if (followers < 10000) {
+                        tips.push("Participate in trending challenges to increase visibility.");
+                        tips.push("Post multiple times per day to maximize your reach.");
+                        tips.push("Use trending sounds and effects in your videos.");
+                    }
+                    if (views < 100000) {
+                        tips.push("Create attention-grabbing content in the first 3 seconds.");
+                        tips.push("Use text overlays to make your content more accessible.");
+                        tips.push("Post during peak hours when your audience is most active.");
+                    }
+                } else if (selectedPlatform === 'facebook') {
+                    if (followers < 10000) {
+                        tips.push("Share your content in relevant Facebook groups.");
+                        tips.push("Go live regularly to engage with your audience in real-time.");
+                        tips.push("Collaborate with other pages in your niche.");
+                    }
+                } else if (selectedPlatform === 'twitch') {
+                    if (followers < 50) {
+                        tips.push("Establish a consistent streaming schedule.");
+                        tips.push("Interact with viewers in chat to build community.");
+                        tips.push("Network with other streamers in your category.");
+                    }
+                    if (watchTime < 8) {
+                        tips.push("Stream for longer periods to accumulate more hours.");
+                        tips.push("Consider streaming multiple times per week.");
+                    }
+                    if (views < 3) {
+                        tips.push("Promote your streams on other social media platforms.");
+                        tips.push("Play games or create content that's currently popular.");
+                    }
+                }
+                
+                // Add general tips if not enough platform-specific ones
+                if (tips.length < 3) {
+                    tips.push("Analyze your analytics to understand what content performs best.");
+                    tips.push("Engage with your audience by responding to comments and messages.");
+                    tips.push("Collaborate with other creators to tap into their audience.");
+                    tips.push("Optimize your profile with a clear bio and profile picture.");
+                }
+                
+                // Display tips
+                tips.forEach(tip => {
+                    const tipElement = document.createElement('div');
+                    tipElement.className = "tip";
+                    tipElement.textContent = tip;
+                    tipsList.appendChild(tipElement);
+                });
+                
+                improvementTips.appendChild(tipsList);
+            }
+            
+            // Initialize with YouTube selected
+            checkEligibility();
+        });
+    </script>
+</body>
+</html>
